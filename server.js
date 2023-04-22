@@ -6,7 +6,7 @@ const app = express();
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config');
 var compiler = webpack(webpackConfig);
-
+// cors middleware
 app.use(cors());
 
 app.use(require('webpack-dev-middleware')(compiler, {
