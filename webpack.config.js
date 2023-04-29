@@ -7,11 +7,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: './src/main.jsx',
+    // entry: './src/main.jsx',
 
-    // entry: {
-    //     main: ['webpack-hot-middleware/client', './src/main.jsx']
-    // },
+    entry: {
+        main: ['webpack-hot-middleware/client', './src/main.jsx']
+    },
 
     output: {
         path: path.resolve(__dirname, 'public'),
@@ -29,6 +29,10 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: ['style-loader', 'css-loader', 'less-loader'],
+            },
+            {
+                test: /\.s[ac]ss $/,
+                use: ['style-loader', 'css-loader', 'sass-loader',],
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -64,13 +68,13 @@ module.exports = {
 
     devtool: 'cheap-module-source-map',
 
-    resolve:{extensions: ['.jsx', '.js', '.json']},
+    resolve:{extensions: ['.tsx', '.ts','.jsx', '.js', '.json']},
 
-    devServer:{
-        host:'localhost',
-        port:'5000',
-        historyApiFallback: true,
-        open: true,
-        hot: true,
-    }
+    // devServer:{
+    //     host:'localhost',
+    //     port:'3000',
+    //     historyApiFallback: true,
+    //     open: true,
+    //     hot: true,
+    // }
 }
