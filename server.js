@@ -5,18 +5,13 @@ const http = require('http');
 const https = require('https');
 const app = express();
 const fs = require('fs');
-var history = require('connect-history-api-fallback');
+const history = require('connect-history-api-fallback');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
+const compiler = webpack(webpackConfig);
 
+const isDev = true;
 
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config');
-var compiler = webpack(webpackConfig);
-
-// ca certificate
-const options = {
-    key: fs.readFileSync('./ssl/9854255_www.afeiatus.com.key'),
-    cert: fs.readFileSync('./ssl/9854255_www.afeiatus.com.pem'),
-}
 
 // cors middleware
 app.use(cors());
@@ -44,15 +39,28 @@ app.get('/data', (req, res)=>{
     res.send('some names');
 })
 
-const httpsServer = https.createServer(options, app);
-const httpServer = http.createServer(app);
+
 
 // server start
-httpsServer.listen(4000, ()=>{
-    console.log('https server start');
-});
-httpServer.listen(3000, ()=>{
-    console.log('http server start');
-});
+if(isDev){
+    app.listen(3000, ()=>{
+        console.log('server start');
+    });
+}else{
+    // ca certificate
+    const options = {
+        key: fs.readFileSync('./ssl/9854255_www.afeiatus.com.key'),
+        cert: fs.readFileSync('./ssl/9854255_www.afeiatus.com.pem'),
+    }
+    const httpsServer = https.createServer(options, app);
+    const httpServer = http.createServer(app);
+    httpsServer.listen(4000, ()=>{
+        console.log('https server start');
+    });
+    httpServer.listen(3000, ()=>{
+        console.log('http server start');
+    });
+}
 
-// app.listen(3000);
+
+
