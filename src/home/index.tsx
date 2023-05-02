@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect, useContext } from 'react';
+import React, { useCallback, useLayoutEffect, useContext, useEffect } from 'react';
 import { Col, Row, Button } from 'antd';
 import {NavLink, useNavigate, useInRouterContext } from 'react-router-dom';
 import ModuleContext from '../context/ModuleContext';
@@ -10,13 +10,19 @@ export default function Home (){
     const isHome = useInRouterContext();
     const [_blank, setIndex] = useContext(ModuleContext);
     
+    useEffect(()=>{
+        isHome && setIndex(null);
+    }, [])
+
+    useEffect(()=>{
+        console.log()
+    })
 
     const handleNavClick = useCallback((addr: indexType)=>{
         navigate(addr);
         setIndex(addr);
     }, [])
 
-    isHome && setIndex(null)
     return (
         <div className='home-container'>
             <section className='improve'>
@@ -55,13 +61,13 @@ export default function Home (){
                             Import excel data, 
                             and export what you want after magic operation!
                         </span>
-                        <NavLink to='tool'>
+                        {/* <NavLink to='tool'> */}
                             <Button size='large' type='primary' ghost style={{fontWeight: 'bold'}}
                                 onClick={()=>handleNavClick('/tool')}
                             >
                                 TOOL
                             </Button>
-                        </NavLink>
+                        {/* </NavLink> */}
                     </Col>
                 </Row>
             </section>
