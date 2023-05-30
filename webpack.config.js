@@ -1,7 +1,7 @@
 
 
 const path = require('path');
-const idProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 const EslitWebpackPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
@@ -64,7 +64,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
     ],
 
-    mode: idProduction ? 'production' : 'development',
+    mode: 'production',
 
     devtool: 'cheap-module-source-map',
 
